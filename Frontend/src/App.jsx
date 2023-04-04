@@ -49,7 +49,6 @@ function App() {
 				{
 					path: "/login",
 					element: <LoginForm />,
-					loader: loginLoader,
 				},
 				{
 					path: "survey",
