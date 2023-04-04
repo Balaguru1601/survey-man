@@ -13,9 +13,8 @@ import AllResponse, {
 	AllResponseLoader,
 } from "./Components/Response/AllResponse";
 import CreateSurvey from "./Components/Survey/CreateSurvey";
-import ViewSurvey, { ViewSurveyLoader } from "./Components/Survey/ViewSurvey";
 import SignUpForm from "./Components/Authentication/SignUpForm";
-import LoginForm, { loginLoader } from "./Components/Authentication/LoginForm";
+import LoginForm from "./Components/Authentication/LoginForm";
 
 let initial = true;
 
@@ -42,14 +41,20 @@ function App() {
 					element: <Home />,
 					loader: HomeLoader,
 				},
+				{
+					path: "/home",
+					element: <Home />,
+					loader: HomeLoader,
+				},
 				// {
 				// 	path: "/register",
 				// 	element: <SignUpForm />,
 				// },
 				{
-					path: "/login",
+					path: "login",
 					element: <LoginForm />,
 				},
+
 				{
 					path: "survey",
 					element: <Survey />,

@@ -27,6 +27,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const LoginForm = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
 	const userField = useInput(
 		{ type: "text", label: "Username", name: "username" },
@@ -40,6 +41,12 @@ const LoginForm = () => {
 		},
 		validatePassword
 	);
+
+	useEffect(() => {
+		if (isLoggedIn) {
+			return navigate("/");
+		}
+	}, []);
 
 	const formIsValid =
 		userField.validities.isValid && passwordField.validities.isValid;
@@ -72,10 +79,9 @@ const LoginForm = () => {
 					type: "success",
 				})
 			);
-			dispatch(verifyToken());
+			navigate("../home");
 			userField.validities.reset();
 			passwordField.validities.reset();
-			return navigate("/");
 		} catch (error) {
 			setLoginError(error.response.data.message);
 		}
@@ -140,19 +146,6 @@ const LoginForm = () => {
 			</Card>
 		</div>
 	);
-};
-
-export const loginLoader = () => {
-	const isLoggedIn = store.getState().auth.isLoggedIn;
-	if (isLoggedIn) {
-		redirect("/");
-		return store.dispatch(
-			SnackActions.setSnack({
-				message: "You need to logout first!",
-				severity: "error",
-			})
-		);
-	}
 };
 
 export default LoginForm;
