@@ -3,16 +3,13 @@ import {
 	validateText,
 	validateYesNo,
 } from "../../Utilities/FormValidationFunctions";
-import EditIcon from "@mui/icons-material/Edit";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CustomFormControl from "../UI/FormControl/CustomFormControl";
 import { Box, Button, Container, IconButton, Typography } from "@mui/material";
-import CustomRadioControl from "../UI/FormControl/CustomRadioControl";
 import { useState } from "react";
 import SurveyTitle from "./SurveyTitle";
-import CustomFormControl2 from "../UI/FormControl/CustomFormControl2";
 import AddQuestion from "./AddQuestion";
 import Error from "../UI/Typography/Error";
+import axios from "axios";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -44,18 +41,6 @@ const CreateSurvey = () => {
 			setAddRadioField((prev) => prev - 1);
 		else if (value === 1 && addRadioField < 7)
 			setAddRadioField((prev) => prev + 1);
-	};
-
-	const isFormValid =
-		addRadioField && addTextField && surveyName.validities.isValid;
-
-	const addSurvey = async () => {
-		try {
-			if (!isFormValid) {
-				setError("Please enter valid credentials");
-				return;
-			}
-		} catch (e) {}
 	};
 
 	const TextFieldList = [
@@ -189,6 +174,58 @@ const CreateSurvey = () => {
 			validateYesNo
 		),
 	];
+	const isTextListValid = () => {
+		let count = 0;
+		for (let i of TextFieldList.slice(0, addTextField))
+			if (i.validities.isValid) count += 1;
+		return count === addTextField ? true : false;
+	};
+	const isRadioListValid = () => {
+		let count = 0;
+		for (let i of RadioFieldList.slice(0, addRadioField))
+			if (i.validities.isValid) count += 1;
+		return count === addRadioField ? true : false;
+	};
+
+	const isFormValid =
+		((addRadioField && isTextListValid()) ||
+			(addTextField && isRadioListValid())) &&
+		surveyName.validities.isValid;
+
+	const addSurvey = async () => {
+		try {
+			if (!isFormValid) {
+				setError("Please enter valid credentials");
+				return;
+			}
+			const questions = [];
+			if (addTextField)
+				for (let i = 0; i < addTextField; i++) {
+					questions.push({
+						question: TextFieldList[i].properties.value,
+						type: "text",
+					});
+				}
+			if (addRadioField)
+				for (let i = 0; i < addRadioField; i++) {
+					questions.push({
+						question: RadioFieldList[i].properties.value,
+						type: "radio",
+					});
+				}
+
+			const response = await axios.post(baseURL + "/survey/create", {
+				questions,
+				name: surveyName.properties.value,
+			});
+			if (response.status === 200) {
+				return console.log(response.data);
+				// return redirect("/survey/" + response.data.survey._id);
+			}
+		} catch (e) {
+			console.log(e.response.data);
+		}
+	};
 
 	return (
 		<Container
@@ -245,6 +282,7 @@ const CreateSurvey = () => {
 			<Button
 				variant="contained"
 				color="error"
+				onClick={addSurvey}
 				sx={{ ml: "50%", transform: "translateX(-50%)", mt: 5 }}
 			>
 				Add Survey

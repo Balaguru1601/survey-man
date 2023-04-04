@@ -30,18 +30,18 @@ module.exports.deleteSurvey = async (req, res, next) => {
 	try {
 		const { sId } = req.params;
 		const token = req.get("Authorization");
-		if (verifyToken(token)) {
-			const survey = await Survey.findById({ sId });
-			await Question.deleteMany({ _id: { $in: survey.questions } });
-			await Survey.deleteOne({ _id: sId });
-			return res.status(200).json({
-				message: "Survey deleted succesfully",
-			});
-		} else {
-			return res.status(401).json({
-				message: "Unauthorized",
-			});
-		}
+		// if (verifyToken(token)) {
+		const survey = await Survey.findById({ sId });
+		await Question.deleteMany({ _id: { $in: survey.questions } });
+		await Survey.deleteOne({ _id: sId });
+		return res.status(200).json({
+			message: "Survey deleted succesfully",
+		});
+		// } else {
+		return res.status(401).json({
+			message: "Unauthorized",
+		});
+		// }
 	} catch (e) {
 		return res.status(400).json({
 			message: "Deletion failed",
