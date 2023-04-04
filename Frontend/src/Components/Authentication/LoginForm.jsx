@@ -13,32 +13,20 @@ import {
 	validateText,
 } from "../../Utilities/FormValidationFunctions";
 import useInput from "../../Hooks/use-input";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Error from "../UI/Typography/Error";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions, verifyToken } from "../../store/AuthStore";
 import CustomFormControl from "../UI/FormControl/CustomFormControl";
 import { SnackActions } from "../../store/SnackStore";
+import store from "../../store/redux";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const LoginForm = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-	useEffect(() => {
-		if (isLoggedIn) {
-			dispatch(
-				SnackActions.setSnack({
-					message: "You need to logout first!",
-					severity: "error",
-				})
-			);
-			return navigate("/");
-		}
-	}, []);
 
 	const userField = useInput(
 		{ type: "text", label: "Username", name: "username" },
@@ -102,7 +90,7 @@ const LoginForm = () => {
 				<Link
 					to="/"
 					style={{
-						color: "white",
+						color: "black",
 						textDecoration: "none",
 						fontFamily: "monospace",
 						fontWeight: "700",
@@ -152,6 +140,19 @@ const LoginForm = () => {
 			</Card>
 		</div>
 	);
+};
+
+export const loginLoader = () => {
+	const isLoggedIn = store.getState().auth.isLoggedIn;
+	if (isLoggedIn) {
+		redirect("/");
+		return store.dispatch(
+			SnackActions.setSnack({
+				message: "You need to logout first!",
+				severity: "error",
+			})
+		);
+	}
 };
 
 export default LoginForm;
