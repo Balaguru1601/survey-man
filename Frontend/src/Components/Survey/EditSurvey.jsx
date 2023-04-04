@@ -102,7 +102,13 @@ const EditSurvey = () => {
 		);
 
 	const addTextFieldHandler = (value) => {
-		if (value === -1 && addTextField > 0) {
+		if (value === 1 && addTextField === 7)
+			dispatch(
+				SnackActions.setSnack({
+					message: "Only 7 text fields allowed",
+				})
+			);
+		else if (value === -1 && addTextField > 0) {
 			setAddTextField((prev) => prev - 1);
 			TextFieldList[addTextField + -1].validities.setInitialValue(
 				`Text question ${addTextField}`
@@ -113,7 +119,13 @@ const EditSurvey = () => {
 	};
 
 	const addRadioFieldHandler = (value) => {
-		if (value === -1 && addRadioField > 0) {
+		if (value === 1 && addRadioField === 7)
+			dispatch(
+				SnackActions.setSnack({
+					message: "Only 7 radio fields allowed",
+				})
+			);
+		else if (value === -1 && addRadioField > 0) {
 			console.log(addRadioField);
 			setAddRadioField((prev) => prev - 1);
 			RadioFieldList[addRadioField - 1].validities.setInitialValue(

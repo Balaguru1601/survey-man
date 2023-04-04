@@ -34,7 +34,13 @@ const CreateSurvey = () => {
 	);
 
 	const addTextFieldHandler = (value) => {
-		if (value === -1 && addTextField > 0)
+		if (value === 1 && addTextField === 7)
+			dispatch(
+				SnackActions.setSnack({
+					message: "Only 7 text fields allowed",
+				})
+			);
+		else if (value === -1 && addTextField > 0)
 			setAddTextField((prev) => prev - 1);
 		else if (value === 1 && addTextField < 7)
 			setAddTextField((prev) => prev + 1);
@@ -42,7 +48,13 @@ const CreateSurvey = () => {
 	};
 
 	const addRadioFieldHandler = (value) => {
-		if (value === -1 && addRadioField > 0)
+		if (value === 1 && addRadioField === 7)
+			dispatch(
+				SnackActions.setSnack({
+					message: "Only 7 radio fields allowed",
+				})
+			);
+		else if (value === -1 && addRadioField > 0)
 			setAddRadioField((prev) => prev - 1);
 		else if (value === 1 && addRadioField < 7)
 			setAddRadioField((prev) => prev + 1);
