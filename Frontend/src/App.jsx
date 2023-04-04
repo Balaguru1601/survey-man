@@ -20,14 +20,13 @@ let initial = true;
 
 function App() {
 	const dispatch = useDispatch();
-	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
 	useEffect(() => {
 		if (initial) {
 			dispatch(verifyToken());
 			initial = false;
 		}
-	}, [dispatch, isLoggedIn]);
+	}, []);
 
 	const router = createBrowserRouter([
 		{

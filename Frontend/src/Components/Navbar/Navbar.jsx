@@ -103,7 +103,9 @@ const Navbar = () => {
 								>
 									<Link
 										to="/survey/create"
-										className={classes.authLinks}
+										style={{
+											color: "black",
+										}}
 									>
 										Create Survey
 									</Link>

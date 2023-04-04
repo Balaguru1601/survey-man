@@ -42,11 +42,11 @@ const LoginForm = () => {
 		validatePassword
 	);
 
-	useEffect(() => {
-		if (isLoggedIn) {
-			return navigate("/");
-		}
-	}, [isLoggedIn]);
+	// useEffect(() => {
+	// 	if (isLoggedIn) {
+	// 		return navigate("/");
+	// 	}
+	// }, [isLoggedIn]);
 
 	const formIsValid =
 		userField.validities.isValid && passwordField.validities.isValid;
@@ -81,6 +81,7 @@ const LoginForm = () => {
 			);
 			userField.validities.reset();
 			passwordField.validities.reset();
+			return navigate("/");
 		} catch (error) {
 			setLoginError(error.response.data.message);
 		}

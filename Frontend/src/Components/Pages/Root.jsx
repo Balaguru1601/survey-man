@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigation } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import axios from "axios";
@@ -6,15 +6,18 @@ import store from "../../store/redux";
 import { SnackActions } from "../../store/SnackStore";
 import CustomSnackbar from "../UI/CustomSnackbar";
 import { useSelector } from "react-redux";
+import { CircularProgress } from "@mui/material";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const Root = () => {
 	const snackOpen = useSelector((state) => state.snack.open);
+	const navigation = useNavigation();
 	return (
 		<>
 			<Navbar />
 			<Outlet />
+			{navigation.state === "loading" && <CircularProgress />}
 			<Footer />
 			{snackOpen && <CustomSnackbar />}
 		</>

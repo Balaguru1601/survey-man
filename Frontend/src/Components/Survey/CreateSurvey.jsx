@@ -45,7 +45,6 @@ const CreateSurvey = () => {
 			setAddTextField((prev) => prev - 1);
 		else if (value === 1 && addTextField < 7)
 			setAddTextField((prev) => prev + 1);
-		console.log(addTextField);
 	};
 
 	const addRadioFieldHandler = (value) => {
@@ -286,28 +285,36 @@ const CreateSurvey = () => {
 					)}
 				</Box>
 			)}
-			<Box display={"flex"} justifyContent={"space-around"}>
+			<Box
+				display={"flex"}
+				justifyContent={"space-evenly"}
+				flexWrap={"wrap"}
+			>
 				<Button
 					variant="contained"
 					onClick={() => addTextFieldHandler(1)}
+					sx={{ mx: 1, mt: { xs: 2, sm: 1, md: 0 } }}
 				>
 					Add Text Field
 				</Button>
 				<Button
 					variant="contained"
 					onClick={() => addTextFieldHandler(-1)}
+					sx={{ mx: 1, mt: { xs: 2, sm: 1, md: 0 } }}
 				>
 					Remove Text Field
 				</Button>
 				<Button
 					variant="contained"
 					onClick={() => addRadioFieldHandler(1)}
+					sx={{ mx: 1, mt: { xs: 2, sm: 1, md: 0 } }}
 				>
 					Add Radio Field
 				</Button>
 				<Button
 					variant="contained"
 					onClick={() => addRadioFieldHandler(-1)}
+					sx={{ mx: 1, mt: { xs: 2, sm: 1, md: 0 } }}
 				>
 					Remove Radio Field
 				</Button>

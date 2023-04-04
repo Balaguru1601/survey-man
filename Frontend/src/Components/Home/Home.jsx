@@ -12,7 +12,7 @@ const Home = () => {
 	const rootLoaderData = useLoaderData();
 
 	const surveys = rootLoaderData.surveys.map((survey, index) => (
-		<Grid item xs={8} md={6} lg={4} key={index}>
+		<Grid item xs={12} md={6} lg={4} key={index}>
 			<SurveyCards survey={survey} />
 		</Grid>
 	));
@@ -36,18 +36,6 @@ const Home = () => {
 			<Box sx={{ flexGrow: 1 }}>
 				<Grid container spacing={2}>
 					{surveys}
-					<Grid item xs={8} md={6} lg={4}>
-						<Paper></Paper>
-					</Grid>
-					<Grid item xs={8} md={6} lg={4}>
-						<Paper></Paper>
-					</Grid>
-					<Grid item xs={8} md={6} lg={4}>
-						<Paper></Paper>
-					</Grid>
-					<Grid item xs={8} md={6} lg={4}>
-						<Paper></Paper>
-					</Grid>
 				</Grid>
 			</Box>
 		</Container>
