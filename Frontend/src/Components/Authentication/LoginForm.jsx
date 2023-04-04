@@ -46,7 +46,7 @@ const LoginForm = () => {
 		if (isLoggedIn) {
 			return navigate("/");
 		}
-	}, []);
+	}, [isLoggedIn]);
 
 	const formIsValid =
 		userField.validities.isValid && passwordField.validities.isValid;
@@ -79,7 +79,6 @@ const LoginForm = () => {
 					type: "success",
 				})
 			);
-			navigate("/");
 			userField.validities.reset();
 			passwordField.validities.reset();
 		} catch (error) {
