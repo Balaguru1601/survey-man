@@ -19,8 +19,10 @@ const Root = () => {
 
 export const RootLoader = async () => {
 	try {
-		const response = await axios.get(baseURL + "/survey/all");
-		return { status: 200, surveys: response.data.surveys };
+		const response = await axios.get(
+			baseURL + "/survey/get/642ba55d66b7c07a5753f8e1"
+		);
+		return { status: 200, surveys: response.data.survey };
 	} catch (e) {
 		store.dispatch(
 			SnackActions.setSnack({

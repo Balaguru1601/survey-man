@@ -15,7 +15,7 @@ module.exports.addSurvey = async (req, res, next) => {
 		}
 		survey.questions = quesIds;
 		await survey.save();
-		survey.populate("questions");
+		await survey.populate("questions");
 		return res
 			.status(200)
 			.json({ message: "Survey added successsfully", survey });
@@ -65,7 +65,8 @@ module.exports.getAllSurveys = async (req, res, next) => {
 
 module.exports.getSurvey = async (req, res, next) => {
 	try {
-		const survey = await Survey.findById(req.param.sId);
+		const survey = await Survey.findById(req.params.sId);
+		await survey.populate("questions");
 		return res.status(200).json({
 			message: "Survey retreived succesfully",
 			survey,

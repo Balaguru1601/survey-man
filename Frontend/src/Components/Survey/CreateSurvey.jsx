@@ -219,8 +219,8 @@ const CreateSurvey = () => {
 				name: surveyName.properties.value,
 			});
 			if (response.status === 200) {
-				return console.log(response.data);
-				// return redirect("/survey/" + response.data.survey._id);
+				// return console.log(response.data);
+				return redirect("/survey/" + response.data.survey._id);
 			}
 		} catch (e) {
 			console.log(e.response.data);
