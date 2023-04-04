@@ -34,6 +34,10 @@ const useInput = (
 		setInpwasTouched((prevState) => false);
 	};
 
+	const setInitialValue = (val) => {
+		setEnteredValue(val);
+	};
+
 	return {
 		properties: {
 			name: descriptors.name,
@@ -50,6 +54,7 @@ const useInput = (
 			reset: resetInput,
 			label: descriptors.label,
 			message: message,
+			setInitialValue,
 		},
 	};
 };

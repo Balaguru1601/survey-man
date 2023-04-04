@@ -1,53 +1,26 @@
 import axios from "axios";
 import store from "../../store/redux";
 import { SnackActions } from "../../store/SnackStore";
-import { useLoaderData } from "react-router-dom";
-import { Container } from "@mui/system";
-import Question from "../Question/Question";
-import { Typography } from "@mui/material";
-import useInput from "../../Hooks/use-input";
-import {
-	validateText,
-	validateYesNo,
-} from "../../Utilities/FormValidationFunctions";
-
+import { redirect, useLoaderData } from "react-router-dom";
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const ViewSurvey = () => {
-	const { survey } = useLoaderData();
-
-	const questionFieldList = [];
-
-	for (const q of survey.questions) {
-		questionFieldList.push(
-			useInput(
-				{
-					type: q.type,
-					label: q.question,
-					name: q._id,
-				},
-				q.type === "text" ? validateText : validateYesNo
-			)
-		);
-	}
-
-	const questions = questionFieldList.map((question, index) => (
-		<Question question={question} key={index} />
-	));
-	return (
-		<Container>
-			<Typography variant="h4" textAlign={"center"}>
-				{survey.name}
-			</Typography>
-			{questions}
-		</Container>
-	);
+	const { survey, responses } = useLoaderData();
+	console.log(survey, responses);
+	return <div>ViewSurvey</div>;
 };
 
 export const ViewSurveyLoader = async ({ params }) => {
 	try {
-		const response = await axios.get(baseURL + "/survey/get/" + params.sId);
-		return { status: 200, survey: response.data.survey };
+		const survey = await axios.get(baseURL + "/survey/" + params.sId);
+		const responses = await axios.get(
+			baseURL + "/response/all/" + params.sId
+		);
+		return {
+			status: 200,
+			survey: survey.data.survey,
+			responses: responses.data.responses,
+		};
 	} catch (e) {
 		store.dispatch(
 			SnackActions.setSnack({
@@ -55,6 +28,7 @@ export const ViewSurveyLoader = async ({ params }) => {
 				severity: "error",
 			})
 		);
+		return redirect("/");
 	}
 };
 

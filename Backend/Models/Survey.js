@@ -15,7 +15,10 @@ const SurveySchema = new Schema(
 				},
 			],
 		},
-		noOfResponse: Number,
+		noOfResponse: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{ timestamps: true }
 );

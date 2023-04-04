@@ -37,6 +37,19 @@ export const validateUserName = (value) => {
 	};
 };
 
+export const validateName = (value) => {
+	const regexp = /^[a-zA-Z]*$/;
+	if (!value.trim() && regexp.test(value))
+		return {
+			validity: value.trim() !== "",
+			message: "Name can contain characters only!",
+		};
+	return {
+		validity: value.trim() !== "",
+		message: "Looks good!",
+	};
+};
+
 export const validateText = (value) => {
 	if (!value.trim())
 		return {

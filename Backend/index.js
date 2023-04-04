@@ -9,6 +9,7 @@ const SurveyRoutes = require("./Routes/Survey");
 
 require("dotenv").config();
 const cors = require("cors");
+const ExpressError = require("./Utilities/ExpressError");
 
 app.use(express.json());
 app.use(cors());
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header(
 		"Access-Control-Allow-Headers",
-		"Origin, X-Requested-With, Content-Type, Accept"
+		"Origin, X-Requested-With, Content-Type, Accept,Authorization-Type"
 	);
 	next();
 });

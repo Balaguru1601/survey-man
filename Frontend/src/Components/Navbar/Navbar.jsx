@@ -6,11 +6,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { authActions } from "../../store/AuthStore";
@@ -106,7 +102,7 @@ const Navbar = () => {
 									}}
 								>
 									<Link
-										to="/create"
+										to="/survey/create"
 										className={classes.authLinks}
 									>
 										Create Survey
@@ -144,7 +140,7 @@ const Navbar = () => {
 								sx={{ my: 2, color: "white", display: "block" }}
 							>
 								<Link
-									to="/create"
+									to="/survey/create"
 									className={classes.authLinks}
 								>
 									Create Survey
@@ -157,15 +153,7 @@ const Navbar = () => {
 						<Box>
 							<Button>
 								<Link to="/login" className={classes.authLinks}>
-									Login
-								</Link>
-							</Button>
-							<Button>
-								<Link
-									to="/register"
-									className={classes.authLinks}
-								>
-									Sign Up
+									Admin Login
 								</Link>
 							</Button>
 						</Box>

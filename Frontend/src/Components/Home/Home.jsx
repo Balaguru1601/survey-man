@@ -1,18 +1,41 @@
 import { Box, Container, Paper, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useRouteLoaderData } from "react-router-dom";
 import SurveyCards from "../Survey/SurveyCards";
+import store from "../../store/redux";
+import { SnackActions } from "../../store/SnackStore";
+import axios from "axios";
+
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const Home = () => {
-	const loaderData = useLoaderData();
-	console.log(loaderData);
+	const rootLoaderData = useLoaderData();
+
+	const surveys = rootLoaderData.surveys.map((survey, index) => (
+		<Grid item xs={8} md={6} lg={4} key={index}>
+			<SurveyCards survey={survey} />
+		</Grid>
+	));
+
+	if (rootLoaderData.surveys.length === 0)
+		return (
+			<Container>
+				<Box sx={{ flexGrow: 1 }}>
+					<Typography
+						variant="h4"
+						color={"white"}
+						textAlign={"center"}
+					>
+						No Surveys found
+					</Typography>
+				</Box>
+			</Container>
+		);
 	return (
 		<Container>
 			<Box sx={{ flexGrow: 1 }}>
 				<Grid container spacing={2}>
-					<Grid item xs={8} md={6} lg={4}>
-						<SurveyCards />
-					</Grid>
+					{surveys}
 					<Grid item xs={8} md={6} lg={4}>
 						<Paper></Paper>
 					</Grid>
@@ -31,12 +54,18 @@ const Home = () => {
 	);
 };
 
-const HomeLoader = async () => {
+export const HomeLoader = async () => {
 	try {
-		const request = await axios.get("/survey/all");
-		return { surveys: request.data.surveys, status: 200 };
+		const response = await axios.get(baseURL + "/survey/all");
+		console.log(response);
+		return { status: 200, surveys: response.data.surveys };
 	} catch (e) {
-		return { status: 400 };
+		store.dispatch(
+			SnackActions.setSnack({
+				message: e.response.data.message || "Retreiving failed",
+				severity: "error",
+			})
+		);
 	}
 };
 

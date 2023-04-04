@@ -4,6 +4,8 @@ const CatchAsync = require("../Utilities/CatchAsync");
 
 router.route("/create").post(CatchAsync(survey.addSurvey));
 
+router.route("/edit").post(CatchAsync(survey.editSurvey));
+
 router.route("/delete/:sId").get(CatchAsync(survey.deleteSurvey));
 
 router.route("/all").get(CatchAsync(survey.getAllSurveys));

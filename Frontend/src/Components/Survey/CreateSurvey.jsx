@@ -10,6 +10,9 @@ import SurveyTitle from "./SurveyTitle";
 import AddQuestion from "./AddQuestion";
 import Error from "../UI/Typography/Error";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { SnackActions } from "../../store/SnackStore";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -17,6 +20,8 @@ const CreateSurvey = () => {
 	const [addTextField, setAddTextField] = useState(0);
 	const [addRadioField, setAddRadioField] = useState(0);
 	const [error, setError] = useState(null);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const surveyName = useInput(
 		{
@@ -194,8 +199,11 @@ const CreateSurvey = () => {
 
 	const addSurvey = async () => {
 		try {
-			if (!isFormValid) {
-				setError("Please enter valid credentials");
+			if (addRadioField == 0 && addTextField == 0) {
+				setError("Cannot create without fields!");
+				return;
+			} else if (!isFormValid) {
+				setError("All fields are required!");
 				return;
 			}
 			const questions = [];
@@ -220,10 +228,21 @@ const CreateSurvey = () => {
 			});
 			if (response.status === 200) {
 				// return console.log(response.data);
-				return redirect("/survey/" + response.data.survey._id);
+				dispatch(
+					SnackActions.setSnack({
+						message: response.data.message,
+						severity: "success",
+					})
+				);
+				return navigate("/");
 			}
 		} catch (e) {
-			console.log(e.response.data);
+			return dispatch(
+				SnackActions.setSnack({
+					message: e.response.data.messasge || e,
+					severity: "error",
+				})
+			);
 		}
 	};
 

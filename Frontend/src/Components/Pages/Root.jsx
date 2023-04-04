@@ -4,25 +4,27 @@ import Footer from "../Footer/Footer";
 import axios from "axios";
 import store from "../../store/redux";
 import { SnackActions } from "../../store/SnackStore";
+import CustomSnackbar from "../UI/CustomSnackbar";
+import { useSelector } from "react-redux";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const Root = () => {
+	const snackOpen = useSelector((state) => state.snack.open);
 	return (
 		<>
 			<Navbar />
 			<Outlet />
 			<Footer />
+			{snackOpen && <CustomSnackbar />}
 		</>
 	);
 };
 
 export const RootLoader = async () => {
 	try {
-		const response = await axios.get(
-			baseURL + "/survey/get/642ba55d66b7c07a5753f8e1"
-		);
-		return { status: 200, surveys: response.data.survey };
+		const response = await axios.get(baseURL + "/survey/all");
+		return { status: 200, surveys: response.data.surveys };
 	} catch (e) {
 		store.dispatch(
 			SnackActions.setSnack({

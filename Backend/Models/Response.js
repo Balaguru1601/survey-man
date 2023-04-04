@@ -10,7 +10,7 @@ const ResponseSchema = new Schema({
 	response: [
 		{
 			answer: { type: String, required: true },
-			questionId: {
+			question: {
 				type: Schema.Types.ObjectId,
 				ref: "Question",
 				required: true,
@@ -20,7 +20,6 @@ const ResponseSchema = new Schema({
 	email: {
 		type: String,
 		required: true,
-		unique: true,
 	},
 	name: {
 		type: String,

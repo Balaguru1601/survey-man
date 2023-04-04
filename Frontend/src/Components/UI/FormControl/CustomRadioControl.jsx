@@ -16,6 +16,7 @@ const CustomRadioControl = (props) => {
 			className={classes.formControl}
 			error={field.validities.isInvalid}
 			color={field.validities.isValid ? "success" : "primary"}
+			sx={{ p: 2 }}
 		>
 			<FormLabel htmlFor={field.properties.id}>
 				{field.validities.label}
@@ -26,8 +27,18 @@ const CustomRadioControl = (props) => {
 				onChange={field.properties.onChange}
 				onBlur={field.properties.onBlur}
 			>
-				<FormControlLabel value={1} control={<Radio />} label="Yes" />
-				<FormControlLabel value={0} control={<Radio />} label="No" />
+				<FormControlLabel
+					value={1}
+					control={<Radio />}
+					label="Yes"
+					sx={{ color: "black" }}
+				/>
+				<FormControlLabel
+					value={0}
+					control={<Radio />}
+					label="No"
+					sx={{ color: "black" }}
+				/>
 			</RadioGroup>
 			{field.validities.isInvalid && (
 				<FormHelperText id="component-error-text">

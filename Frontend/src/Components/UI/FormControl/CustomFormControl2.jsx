@@ -20,7 +20,7 @@ const CustomFormControl2 = (props) => {
 			className={classes.formControl}
 			error={field.validities.isInvalid}
 			color={field.validities.isValid ? "success" : "primary"}
-			sx={{ backgroundColor: "whitesmoke" }}
+			sx={{ backgroundColor: "whitesmoke", p: 2 }}
 		>
 			<FormLabel htmlFor={field.properties.id}>
 				{field.validities.label}
@@ -31,6 +31,8 @@ const CustomFormControl2 = (props) => {
 					mt: 2,
 					width: "100%",
 					backgroundColor: "white",
+					border: "solid 1px #979797",
+					borderRadius: "3px",
 				}}
 				{...field.properties}
 				endAdornment={
