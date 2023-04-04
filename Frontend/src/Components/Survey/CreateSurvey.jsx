@@ -38,6 +38,7 @@ const CreateSurvey = () => {
 			dispatch(
 				SnackActions.setSnack({
 					message: "Only 7 text fields allowed",
+					severity: "error",
 				})
 			);
 		else if (value === -1 && addTextField > 0)
@@ -52,6 +53,7 @@ const CreateSurvey = () => {
 			dispatch(
 				SnackActions.setSnack({
 					message: "Only 7 radio fields allowed",
+					severity: "error",
 				})
 			);
 		else if (value === -1 && addRadioField > 0)
