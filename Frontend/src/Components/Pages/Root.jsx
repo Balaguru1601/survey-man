@@ -7,6 +7,7 @@ import { SnackActions } from "../../store/SnackStore";
 import CustomSnackbar from "../UI/CustomSnackbar";
 import { useSelector } from "react-redux";
 import { CircularProgress } from "@mui/material";
+import CustomLoader from "../UI/Modal/CustomLoader";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -17,7 +18,7 @@ const Root = () => {
 		<>
 			<Navbar />
 			<Outlet />
-			{navigation.state === "loading" && <CircularProgress />}
+			{navigation.state === "loading" && <CustomLoader />}
 			<Footer />
 			{snackOpen && <CustomSnackbar />}
 		</>
