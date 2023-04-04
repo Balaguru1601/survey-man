@@ -57,7 +57,6 @@ const Home = () => {
 export const HomeLoader = async () => {
 	try {
 		const response = await axios.get(baseURL + "/survey/all");
-		console.log(response);
 		return { status: 200, surveys: response.data.surveys };
 	} catch (e) {
 		store.dispatch(
