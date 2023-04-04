@@ -41,11 +41,6 @@ function App() {
 					element: <Home />,
 					loader: HomeLoader,
 				},
-				{
-					path: "/home",
-					element: <Home />,
-					loader: HomeLoader,
-				},
 				// {
 				// 	path: "/register",
 				// 	element: <SignUpForm />,

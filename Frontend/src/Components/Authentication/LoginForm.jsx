@@ -79,7 +79,7 @@ const LoginForm = () => {
 					type: "success",
 				})
 			);
-			navigate("../home");
+			navigate("/");
 			userField.validities.reset();
 			passwordField.validities.reset();
 		} catch (error) {
