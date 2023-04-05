@@ -19,7 +19,7 @@ const CustomLoader = (props) => {
 						transform: "translate(-50%,-50%)",
 					}}
 				>
-					<CircularProgress color={"error"} />
+					<CircularProgress color={"warning"} />
 				</Box>,
 				document.getElementById("overlay-root")
 			)}

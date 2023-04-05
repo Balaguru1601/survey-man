@@ -1,33 +1,26 @@
 import classes from "./Authentication.module.css";
-import {
-	Card,
-	CardMedia,
-	CardContent,
-	Button,
-	CardActions,
-	Typography,
-} from "@mui/material";
+import { Card, CardContent, Button, CardActions } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
 	validatePassword,
 	validateText,
 } from "../../Utilities/FormValidationFunctions";
 import useInput from "../../Hooks/use-input";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Error from "../UI/Typography/Error";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions, verifyToken } from "../../store/AuthStore";
+import { authActions } from "../../store/AuthStore";
 import CustomFormControl from "../UI/FormControl/CustomFormControl";
 import { SnackActions } from "../../store/SnackStore";
-import store from "../../store/redux";
+import CustomLoader from "../UI/Modal/CustomLoader";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const LoginForm = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+	// const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
 	const userField = useInput(
 		{ type: "text", label: "Username", name: "username" },
@@ -53,6 +46,7 @@ const LoginForm = () => {
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [loginError, setLoginError] = useState(null);
+	const [loading, setIsLoading] = useState(false);
 
 	const handleClickShowPassword = () => {
 		setShowPassword((prev) => !prev);
@@ -66,6 +60,7 @@ const LoginForm = () => {
 			return;
 		}
 		try {
+			setIsLoading(true);
 			event.preventDefault();
 			const response = await axios.post(backendUrl + "/user/login", {
 				username: userField.properties.value,
@@ -81,14 +76,17 @@ const LoginForm = () => {
 			);
 			userField.validities.reset();
 			passwordField.validities.reset();
+			setIsLoading(false);
 			return navigate("/");
 		} catch (error) {
+			setIsLoading(false);
 			setLoginError(error.response.data.message);
 		}
 	};
 
 	return (
 		<div className={classes.form}>
+			{loading && <CustomLoader />}
 			<Card
 				className={classes.card}
 				sx={{ backgroundColor: "whitesmoke" }}
