@@ -13,12 +13,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { SnackActions } from "../../store/SnackStore";
+import CustomLoader from "../UI/Modal/CustomLoader";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const CreateSurvey = () => {
 	const [addTextField, setAddTextField] = useState(0);
 	const [addRadioField, setAddRadioField] = useState(0);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -234,11 +236,13 @@ const CreateSurvey = () => {
 						type: "radio",
 					});
 				}
+			setLoading(true);
 
 			const response = await axios.post(baseURL + "/survey/create", {
 				questions,
 				name: surveyName.properties.value,
 			});
+			setLoading(false);
 			if (response.status === 200) {
 				// return console.log(response.data);
 				dispatch(
@@ -250,6 +254,7 @@ const CreateSurvey = () => {
 				return navigate("/");
 			}
 		} catch (e) {
+			setLoading(false);
 			return dispatch(
 				SnackActions.setSnack({
 					message: e.response.data.messasge || e,
@@ -263,6 +268,7 @@ const CreateSurvey = () => {
 		<Container
 			sx={{ p: 4, backgroundColor: "whitesmoke", borderRadius: 2 }}
 		>
+			{loading && <CustomLoader />}
 			{error && <Error message={error} />}
 			<SurveyTitle surveyName={surveyName} />
 			{addTextField && (

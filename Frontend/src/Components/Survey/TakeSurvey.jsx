@@ -16,6 +16,7 @@ import CustomFormControl2 from "../UI/FormControl/CustomFormControl2";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import Error from "../UI/Typography/Error";
+import CustomLoader from "../UI/Modal/CustomLoader";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -23,6 +24,7 @@ const TakeSurvey = () => {
 	const { sId } = useParams();
 	const { survey } = useLoaderData();
 	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -77,6 +79,7 @@ const TakeSurvey = () => {
 			return;
 		}
 		try {
+			setLoading(true);
 			const response = [];
 			for (const q of questionFieldList) {
 				response.push({
@@ -97,8 +100,10 @@ const TakeSurvey = () => {
 						severity: "success",
 					})
 				);
+			setLoading(false);
 			return navigate("/");
 		} catch (e) {
+			setLoading(false);
 			dispatch(
 				SnackActions.setSnack({
 					message: e.response.data.message,
@@ -114,6 +119,7 @@ const TakeSurvey = () => {
 	));
 	return (
 		<Container>
+			{loading && <CustomLoader />}
 			<Typography
 				variant="h4"
 				textAlign={"center"}

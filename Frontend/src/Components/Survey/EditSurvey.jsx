@@ -12,6 +12,7 @@ import { Box, Button, Container, IconButton, Typography } from "@mui/material";
 import AddQuestion from "./AddQuestion";
 import { useDispatch } from "react-redux";
 import { SnackActions } from "../../store/SnackStore";
+import CustomLoader from "../UI/Modal/CustomLoader";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -34,6 +35,7 @@ const EditSurvey = () => {
 			survey.questions.filter((item) => item.type === "text").length
 	);
 	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	const surveyName = useInput(
 		{
@@ -179,12 +181,13 @@ const EditSurvey = () => {
 						type: "radio",
 					});
 				}
-
+			setLoading(true);
 			const response = await axios.post(baseURL + "/survey/edit", {
 				questions,
 				name: surveyName.properties.value,
 				sId: survey._id,
 			});
+			setLoading(false);
 			if (response.status === 200) {
 				dispatch(
 					SnackActions.setSnack({
@@ -195,6 +198,7 @@ const EditSurvey = () => {
 				return navigate("/survey/take/" + response.data.survey._id);
 			}
 		} catch (e) {
+			setLoading(false);
 			return dispatch(
 				SnackActions.setSnack({
 					message: e.response.data.messasge || e,
@@ -208,6 +212,7 @@ const EditSurvey = () => {
 		<Container
 			sx={{ p: 4, backgroundColor: "whitesmoke", borderRadius: 2 }}
 		>
+			{loading && <CustomLoader />}
 			{error && <Error message={error} />}
 			<SurveyTitle surveyName={surveyName} />
 			{addTextField && (
