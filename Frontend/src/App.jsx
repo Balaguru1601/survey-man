@@ -5,7 +5,7 @@ import "./App.css";
 import Home, { HomeLoader } from "./Components/Home/Home";
 import Root, { RootLoader } from "./Components/Pages/Root";
 import { verifyToken } from "./store/AuthStore";
-import Survey from "./Components/Pages/Survey";
+import Survey, { SurveyLoader } from "./Components/Pages/Survey";
 import TakeSurvey, { TakeSurveyLoader } from "./Components/Survey/TakeSurvey";
 import EditSurvey, { EditSurveyLoader } from "./Components/Survey/EditSurvey";
 import Response, { ResponseLoader } from "./Components/Pages/Response";
@@ -68,6 +68,7 @@ function App() {
 							element: <CreateSurvey />,
 						},
 					],
+					loader: SurveyLoader,
 				},
 				{
 					path: "response/:sId",
@@ -80,6 +81,7 @@ function App() {
 							loader: AllResponseLoader,
 						},
 					],
+					loader: SurveyLoader,
 				},
 			],
 		},

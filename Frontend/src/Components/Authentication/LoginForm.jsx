@@ -137,7 +137,12 @@ const LoginForm = () => {
 						flexWrap: "wrap",
 					}}
 				>
-					<Button variant="contained" fullWidth onClick={loginUser}>
+					<Button
+						type="submit"
+						variant="contained"
+						fullWidth
+						onClick={loginUser}
+					>
 						Login
 					</Button>
 				</CardActions>
