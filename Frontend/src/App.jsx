@@ -9,9 +9,7 @@ import Survey, { SurveyLoader } from "./Components/Pages/Survey";
 import TakeSurvey, { TakeSurveyLoader } from "./Components/Survey/TakeSurvey";
 import EditSurvey, { EditSurveyLoader } from "./Components/Survey/EditSurvey";
 import Response, { ResponseLoader } from "./Components/Pages/Response";
-import AllResponse, {
-	AllResponseLoader,
-} from "./Components/Response/AllResponse";
+import AllResponse, { AllResponseLoader } from "./Components/Response/AllResponse";
 import CreateSurvey from "./Components/Survey/CreateSurvey";
 import SignUpForm from "./Components/Authentication/SignUpForm";
 import LoginForm from "./Components/Authentication/LoginForm";
@@ -68,7 +66,7 @@ function App() {
 							element: <CreateSurvey />,
 						},
 					],
-					loader: SurveyLoader,
+					// loader: SurveyLoader,
 				},
 				{
 					path: "response/:sId",
